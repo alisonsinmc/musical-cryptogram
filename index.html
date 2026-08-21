@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Cryptogram Generator</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; text-align: center; background: #f4f6f9; color: #333; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; box-sizing: border-box; }
+        button.play-btn { background: #4CAF50; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button.play-btn:hover { background: #45a049; }
+        button.reset-btn { background: #e74c3c; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button.reset-btn:hover { background: #c0392b; }
+        #output { font-size: 24px; font-weight: bold; letter-spacing: 4px; margin: 20px 0; color: #2c3e50; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎵 Musical Cryptogram Encoder</h2>
+    <p>Type a secret message to turn it into a playable melody!</p>
+
+    <input type="text" id="userInput" placeholder="Enter text (e.g., ELISA)" value="ELISA">
+
+    <select id="methodSelect">
+        <option value="french">French Method (26-Letter Grid)</option>
+        <option value="german">German Method (Natural Letters & Accidentals)</option>
+    </select>
+
+    <button class="play-btn" onclick="generateAndPlay()">Encode & Play 🔊</button>
+    <button class="reset-btn" onclick="resetApp()">Reset Canvas 🔄</button>
+
+    <canvas id="staffCanvas" width="400" height="160" style="background: #fff; border: 1px solid #ddd; border-radius: 6px; margin: 15px 0;"></canvas>
+    <div id="output">---</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
