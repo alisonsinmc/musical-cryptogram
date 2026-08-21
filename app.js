@@ -43,17 +43,26 @@ function generateAndPlay() {
 function drawStaff(notes) {
     const canvas = document.getElementById('staffCanvas');
     const ctx = canvas.getContext('2d');
-
+    
+    // 1. Calculate the exact width needed for all notes
+    let startX = 60;
+    let spacingX = 40; 
+    let neededWidth = startX + (notes.length * spacingX) + 40;
+    
+    // Set the canvas width to match the notes (with a minimum of 500px)
+    canvas.width = Math.max(neededWidth, 500);
+    
+    // Clear canvas after resizing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw 5 staff lines
+    
+    // 2. Draw 5 staff lines stretching across the entire expanded canvas width
     ctx.strokeStyle = '#aaa';
     ctx.lineWidth = 1;
     for (let i = 0; i < 5; i++) {
         let y = 60 + (i * 15);
         ctx.beginPath();
         ctx.moveTo(20, y);
-        ctx.lineTo(380, y);
+        ctx.lineTo(canvas.width - 20, y); // Stretches perfectly to the very end
         ctx.stroke();
     }
 
