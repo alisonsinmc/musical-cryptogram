@@ -40,6 +40,7 @@ function generateAndPlay() {
     playMelodySequence(currentNotes);
 }
 
+
 function drawStaff(notes) {
     const canvas = document.getElementById('staffCanvas');
     const ctx = canvas.getContext('2d');
@@ -49,7 +50,7 @@ function drawStaff(notes) {
     let spacingX = 40; 
     let neededWidth = startX + (notes.length * spacingX) + 40;
     
-    // Set the canvas width to match the notes (with a minimum of 500px)
+    // This line tells the canvas to physically stretch wider for long words!
     canvas.width = Math.max(neededWidth, 500);
     
     // Clear canvas after resizing
@@ -62,42 +63,39 @@ function drawStaff(notes) {
         let y = 60 + (i * 15);
         ctx.beginPath();
         ctx.moveTo(20, y);
-        ctx.lineTo(canvas.width - 20, y); // Stretches perfectly to the very end
+        ctx.lineTo(canvas.width - 20, y); // This stretches the lines to the new end!
         ctx.stroke();
     }
-
-    let startX = 50;
-    let spacingX = 40;
-
+    
+    // 3. Draw notes as circles along the lines
     notes.forEach((note, index) => {
         let x = startX + (index * spacingX);
         let y = noteHeights[note] || 90;
+        
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#000000'; 
 
-        if (x < canvas.width - 30) {
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#000000';
-
-            if (index === currentPlayingIndex) {
-                ctx.fillStyle = '#000000';
-            } else if (tracksPlayed[index] === true) {
-                ctx.fillStyle = '#ffffff';
-            } else {
-                ctx.fillStyle = '#dddddd';
-            }
-
-            ctx.beginPath();
-            ctx.arc(x, y, 8, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.stroke();
-
-            // Text placement changed to sit ABOVE the note circle
-            ctx.fillStyle = '#333';
-            ctx.font = index === currentPlayingIndex ? 'bold 12px sans-serif' : '12px sans-serif';
-            ctx.textAlign = 'center'; // Centers text over the circle perfectly
-            ctx.fillText(note, x, y - 14);
+        if (index === currentPlayingIndex) {
+            ctx.fillStyle = '#000000'; 
+        } else if (tracksPlayed[index] === true) {
+            ctx.fillStyle = '#ffffff'; 
+        } else {
+            ctx.fillStyle = '#dddddd'; 
         }
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke(); 
+        
+        // Text label sitting perfectly ABOVE the note circle
+        ctx.fillStyle = '#333';
+        ctx.font = index === currentPlayingIndex ? 'bold 12px sans-serif' : '12px sans-serif';
+        ctx.textAlign = 'center'; 
+        ctx.fillText(note, x, y - 14); 
     });
 }
+
 
 function playMelodySequence(notes) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
